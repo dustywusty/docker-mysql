@@ -1,22 +1,46 @@
-### i can't be bothered to type docker.io so often
+# docker-mysql
 
-```
+### Update
+
+~~~
+root@host:~# apt-get update
+~~~
+
+### Install Docker (Linode) Ubuntu 14.04
+
+~~~
+root@host:~# apt-get install docker.io
+~~~
+
+### Install docker-mysql
+
+* I personally like a shorter alias
+
+~~~
 echo 'alias d=docker.io' >> .profile
 source ~/.profile
-```
+~~~
 
-### let's setup some directories to persist our db
+* Add a few directories where our DB can persist
 
-```
+~~~
 mkdir -p /var/docker/mysql/var/lib/mysql/
-```
+~~~
 
-### Build and start our mysql container
+* Build our docker image
 
-```
+~~~
 d build -t dusty/mysql github.com/clarkda/docker-mysql.git
+~~~
 
-d run -d -p 3306:3306 -v /var/docker/mysql/var/lib/mysql/:/var/lib/mysql dusty-mysql
-```
+* Start a container, expose port 3306, and attach our persist directories
 
-mysql --host=(d inspect -format='{{.NetworkSettings.IPAddress}}' CONTAINER-ID) -ucharlie -p
+~~~
+d run -d -p 3306:3306 -v /var/docker/mysql/var/lib/mysql/:/var/lib/mysql dusty/mysql
+~~~
+
+* Connect from our host machine
+
+~~~
+mysql --host=`d inspect -format='{{.NetworkSettings.IPAddress}}' CONTAINER_ID` -ucharlie -p
+~~~
