@@ -1,11 +1,11 @@
-### Install Docker (Linode) Ubuntu 14.04
+## Install Docker (Linode) Ubuntu 14.04
 
 ~~~
 apt-get update
 apt-get install docker.io
 ~~~
 
-### Install docker-mysql
+## Install docker-mysql
 
 ##### I personally like a shorter alias
 
